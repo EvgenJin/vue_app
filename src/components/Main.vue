@@ -46,7 +46,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-icon class="mx-4">fab fa-youtube</v-icon>
       <v-toolbar-title class="mr-12 align-center">
-        <span class="title">MyNewApp</span>
+        <span class="title">WarehouseApp</span>
       </v-toolbar-title>
       <v-spacer />
       <v-row
@@ -92,11 +92,17 @@
     }),
     created () {
       this.$vuetify.theme.dark = false
+
+    },
+    mounted () {
+        this.$store.dispatch('SETMANUFACTURER');
+        this.$store.dispatch('set_models');
+        this.$store.dispatch('set_stores')
     },
     methods : {
         test() {
             this.$router.push({name: 'HelloWorld'})
-        }
+        },
     }
   }
 </script>

@@ -9,21 +9,20 @@
             <v-list-item-content>
             <v-row>
             <v-col sm="6">
-              <v-select
-                :items="list_manufacturers"
-                label="Производитель"
-                outlined
-                return-object
-                v-model="product.manufacturer"
-                item-text="name"
-              ></v-select>
+            <v-select
+              v-model="product.manufacturer"
+              :items="list_manufacturers"
+              item-text="name"
+              label="Производитель"
+              outlined return-object>
+            </v-select>
             </v-col>
             <v-col sm="6">
               <v-select
+                v-model="product.model"
                 :items="list_products"
                 label="Модель"
                 outlined
-                v-model="product.model"
               ></v-select>
             </v-col>
             </v-row>
@@ -42,12 +41,11 @@
               </v-col>
               <v-col sm="12">
                 <v-select
+                  v-model="product.storage"
                   :items="list_storages"
                   label="Склад"
-                  outlined
-                  v-model="product.storage"
-                  return-object
                   item-text="address"
+                  outlined return-object
                 ></v-select>
               </v-col>
             </v-row>
@@ -62,7 +60,7 @@
                 raised
                 color="primary"
                 @click="handleSubmit()"
-              >Добавить</v-btn>
+              >Добавить на склад</v-btn>
             </v-row>
           </v-card-actions>
         </v-card>
@@ -96,16 +94,16 @@
             return this.$store.state.manufacturer.map(product => ({id:product.id,name:product.name}))
           },
           list_products() {
-            return this.$store.state.products.filter(res => res.manufacturer === this.product.manufacturer.name).map(product => product.name);
+            // console.log(this.$store.state.models)
+            return this.$store.state.models.filter(res => res.manufacturer_id === this.product.manufacturer.id).map(product => product.name);
+
           },
           list_storages() {
-            return this.$store.state.storages.map(res => ({id:res.id, name:res.name, address:res.address}))
+            return this.$store.state.stores.map(res => ({id:res.id, name:res.name, address:res.address}))
           }
         },
         mounted() {
             this.drawer = false;
-            // this.getProductInfo();
-            // this.getProductStorages();
         }
         , methods: {
             handleSubmit() {
@@ -113,11 +111,15 @@
                 model: this.product.model,
                 manufacturer_id: this.product.manufacturer.id,
                 serial_num: this.product.serial_num,
-                inventory_num: this.inventory_num,
+                inventory_num: this.product.inventory_num,
                 ip_addr: this.product.ip_addr,
                 store_id: this.product.storage.id
               };
-              this.alarma(product_object,'info');
+              // this.alarma(product_object,'info');
+              console.log(product_object)
+            },
+            test(){
+
             },
             alarma(str,type) {
               this.alert_notice.on = true;

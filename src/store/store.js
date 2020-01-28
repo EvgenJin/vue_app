@@ -7,19 +7,10 @@ export const store = new Vuex.Store({
   state: {
     login : 'empty',
     drawer: false,
-    manufacturer: [
-      {id:1,name:"hp"},
-      {id:2,name:"lenovo"},
-      ],
-    products: [
-      {id:1,name:"hp1",manufacturer:"hp"},
-      {id:2,name:"hp1",manufacturer:"hp"},
-      {id:3,name:"hp3",manufacturer:"hp"}
-    ],
-    storages: [
-      {id:1,name:"Татищева",address:"Татищева 3"},
-      {id:2,name:"Мичурина",address:"Мичурина 6"},
-    ]
+    manufacturer: [],
+    products: [],
+    stores: [],
+    models: []
   },
   getters: {
     LOGIN : state => {
@@ -36,6 +27,9 @@ export const store = new Vuex.Store({
     },
     storages: state => {
       return state.stores
+    },
+    models: state => {
+      return state.models
     }
   },
   mutations: {
@@ -47,16 +41,42 @@ export const store = new Vuex.Store({
     },
     SET_MANUFACTURER: (state,payload) => {
       state.manufacturer = payload
-    }
+    },
+    set_models: (state,payload) => {
+      state.models = payload
+    },
+    set_stores: (state,payload) => {
+      state.stores = payload
+    },
+
   },
   actions: {
-    // async SETMANUFACTURER({commit}) {
-    //   try {
-    //     let res = await Vue.axios.get('/products/')
-    //     commit('LOAD_ALL_PRODUCTS', res.data)
-    //   } catch(err) {
-    //     console.log(err)
-    //   }
-    // }
+    async SETMANUFACTURER({commit}) {
+      try {
+        let res = await fetch('http://localhost:3000/api/manufacturers/all').then(res => res.json());
+        commit('SET_MANUFACTURER', res)
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    set_models: async (context, name) => {
+      try {
+        let data = await fetch('http://localhost:3000/api/models/all').then(res => res.json());
+        context.commit('set_models', data)
+      }
+      catch (err) {
+        console.log(err)
+      }
+    },
+    set_stores: async ({commit}) => {
+      try {
+        let res = await fetch('http://localhost:3000/api/stores/all').then(res => res.json());
+        console.log(res)
+        commit('set_stores',res);
+      }
+      catch (err) {
+        console.log(err)
+      }
+    }
   },
 });
