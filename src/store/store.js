@@ -15,6 +15,10 @@ export const store = new Vuex.Store({
       {id:1,name:"hp1",manufacturer:"hp"},
       {id:2,name:"hp1",manufacturer:"hp"},
       {id:3,name:"hp3",manufacturer:"hp"}
+    ],
+    storages: [
+      {id:1,name:"Татищева",address:"Татищева 3"},
+      {id:2,name:"Мичурина",address:"Мичурина 6"},
     ]
   },
   getters: {
@@ -27,7 +31,12 @@ export const store = new Vuex.Store({
     MANUFACTURER: state => {
       return state.manufacturer
     },
-    products: state => color => state.products.filter(res => res.manufacturer === color)
+    PRODUCTS: state => {
+      return state.manufacturer
+    },
+    storages: state => {
+      return state.stores
+    }
   },
   mutations: {
     SET_LOGIN : (state, payload) => {
