@@ -12,8 +12,15 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>Username</v-list-item-title>
-            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+            <v-list-item-title>{{login}}</v-list-item-title>
+            <v-btn x-small dark color="secondary"
+              @click="logout()"
+            >logout
+            </v-btn>
+<!--            <v-btn text icon color="pink">-->
+<!--              <v-icon>mdi-heart</v-icon>-->
+<!--            </v-btn>-->
+<!--            <v-list-item-subtitle>Logged In</v-list-item-subtitle>-->
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -81,6 +88,7 @@
     },
     data: () => ({
       drawer: null,
+      login:null,
       items: [
         { icon: 'add_shopping_cart', text: 'AddItem' , url : "AddItem"},
         { icon: 'edit', text: 'EditItem' , url: "EditItem"},
@@ -97,12 +105,19 @@
     mounted () {
         this.$store.dispatch('SETMANUFACTURER');
         this.$store.dispatch('set_models');
-        this.$store.dispatch('set_stores')
+        this.$store.dispatch('set_stores');
+        this.init();
     },
     methods : {
-        test() {
-            this.$router.push({name: 'HelloWorld'})
+        init() {
+          this.login = this.$store.getters.LOGIN;
         },
+        logout() {
+            localStorage.removeItem('jwt');
+            localStorage.removeItem('login');
+            this.$store.commit('SET_LOGIN', null);
+            this.$router.push({name: 'Login'})
+        }
     }
   }
 </script>

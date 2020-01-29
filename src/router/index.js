@@ -7,8 +7,7 @@ import EditItem from '@/components/EditItem'
 Vue.use(Router)
 
 const ifAuthenticated = (to, from, next) => {
-  // if (localStorage.getItem('jwt')) {
-  if (true) {
+  if (localStorage.getItem('jwt')) {
     next();
     return
   }
@@ -39,9 +38,9 @@ export default new Router({
           name: 'EditItem',
           alias: '',
           component: EditItem
-        }        
+        }
       ]
-    }    
+    }
     // {
     //   path: '/HelloWorld',
     //   name: 'HelloWorld',

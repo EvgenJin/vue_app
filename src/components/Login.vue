@@ -46,7 +46,7 @@
               :rules="[v => !!v || 'password должен быть заполнен']"
               required
             ></v-text-field>
-            <v-btn :disabled="!valid" @click="test(usr)">singin</v-btn>
+            <v-btn :disabled="!valid" @click="login(usr)">singin</v-btn>
             <v-btn v-if="alert_notice.type_error == 'not_exists'" @click="dialog = true">register</v-btn>
             <v-btn v-if="alert_notice.type_error == 'incorrect_password'" @click="alarma">reset password</v-btn>
           </v-form>
@@ -75,29 +75,29 @@
           },
         }),
         methods : {
-            handleSubmit(object) {
-                console.log(JSON.stringify(object));
-                fetch('http://localhost:8080/JEE7_REST/api/user/login', {
+            login(object) {
+                // console.log(JSON.stringify(object));
+                fetch('http://localhost:3000/api/user/login', {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(object)
                 })
                 .then(res => {
                   if (res.status == 200) {
-                      res.json().then(res => {
-                          localStorage.setItem('jwt', res.token);
+                      res.text().then(res => {
+                          localStorage.setItem('jwt', res);
                           localStorage.setItem('login', this.usr.login);
                           this.$store.commit('SET_LOGIN', this.usr.login);
                       })
-                          // TODO отправить на страницу пользователя
-                          .then(res => this.$router.push({name: 'order'}))
+                      .then(res => this.$router.push({name: 'Main'}))
                   }
-                  if (res.status == 401) {
-                      res.json().then(res => {
-                          this.alarma(res.message);
-                          this.alert_notice.type_error = res.type;
-                          // TODO отправить на страницу регистрации / сброса пароля
-                      });
+                  if (res.status == 403) {
+                      res.text().then(res => this.alarma(res))
+                  //    TODO на регистрацию пользователя
+                  }
+                  if (res.status == 400) {
+                      res.text().then(res => this.alarma(res))
+                  //    TODO сброс пароля
                   }
                   if (res.status == 500) {
                       console.log(res);
@@ -140,7 +140,6 @@
                                 res.text().then(res => this.alarma(res))
                             }
                             else {
-                                // console.log(res)
                                 res.text().then(res => console.log('!!!' + res))
                             }
                         })
