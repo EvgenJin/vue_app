@@ -8,11 +8,10 @@
       <template v-slot:prepend>
         <v-list-item two-line>
           <v-list-item-avatar>
-<!--            <img src="https://randomuser.me/api/portraits/women/81.jpg">-->
+            <img src="https://randomuser.me/api/portraits/men/81.jpg">
           </v-list-item-avatar>
-
           <v-list-item-content>
-            <v-list-item-title>{{login}}</v-list-item-title>
+            <v-list-item-title>{{user.name}}</v-list-item-title>
             <v-btn x-small dark color="secondary"
               @click="logout()"
             >logout
@@ -88,36 +87,41 @@
     },
     data: () => ({
       drawer: null,
-      login:null,
+      login:{},
       items: [
         { icon: 'add_shopping_cart', text: 'AddItem' , url : "AddItem"},
-        { icon: 'edit', text: 'EditItem' , url: "EditItem"},
-
-        { icon: 'history', text: 'baz' },
-        { icon: 'featured_play_list', text: 'gaz' },
-        { icon: 'watch_later', text: 'taz' },
+        { icon: 'find_in_page', text: 'EditItem' , url: "EditItem"},
+        { icon: 'devices', text: 'ListProducts',url: "ListProducts" },
+        { icon: 'store', text: 'ListStores', url: "ListStores" },
+        { icon: 'compare_arrows', text: 'ListTransfers',url:"ListTransfers" },
       ]
     }),
+    computed: {
+      user(){
+          return this.$store.state.login;
+      }
+    },
     created () {
-      this.$vuetify.theme.dark = false
-
+      this.$vuetify.theme.dark = false;
+      this.init();
     },
     mounted () {
-        this.$store.dispatch('SETMANUFACTURER');
+        this.$store.dispatch('set_manufacturer');
         this.$store.dispatch('set_models');
         this.$store.dispatch('set_stores');
-        this.init();
+        this.$store.dispatch('set_products');
+        this.$store.dispatch('set_login');
+        this.init()
     },
     methods : {
-        init() {
-          this.login = this.$store.getters.LOGIN;
-        },
-        logout() {
-            localStorage.removeItem('jwt');
-            localStorage.removeItem('login');
-            this.$store.commit('SET_LOGIN', null);
-            this.$router.push({name: 'Login'})
-        }
+      init() {
+      },
+      logout() {
+          localStorage.removeItem('jwt');
+          localStorage.removeItem('login');
+          this.$store.commit('set_login', null);
+          this.$router.push({name: 'Login'})
+      }
     }
   }
 </script>

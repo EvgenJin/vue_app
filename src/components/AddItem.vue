@@ -94,7 +94,6 @@
             return this.$store.state.manufacturer.map(product => ({id:product.id,name:product.name}))
           },
           list_products() {
-            // console.log(this.$store.state.models)
             return this.$store.state.models.filter(res => res.manufacturer_id === this.product.manufacturer.id).map(product => product.name);
 
           },
@@ -113,13 +112,21 @@
                 serial_num: this.product.serial_num,
                 inventory_num: this.product.inventory_num,
                 ip_addr: this.product.ip_addr,
-                store_id: this.product.storage.id
+                store_to: this.product.storage.id,
+                user: this.$store.getters.login
               };
+              fetch('http://localhost:3000/api/products', {
+                  method: "POST",
+                  headers: {"Content-Type": "application/json"},
+                  body: JSON.stringify(product_object)
+              }).then((res) => {
+                  console.log(res)
+              })
               // this.alarma(product_object,'info');
-              console.log(product_object)
+              // console.log(product_object)
             },
             test(){
-
+               console.log(this.$store.getters.login)
             },
             alarma(str,type) {
               this.alert_notice.on = true;

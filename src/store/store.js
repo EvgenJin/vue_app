@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    login : 'empty',
+    login : {},
+    jwt:localStorage.getItem('jwt'),
     drawer: false,
     manufacturer: [],
     products: [],
@@ -13,17 +14,17 @@ export const store = new Vuex.Store({
     models: []
   },
   getters: {
-    LOGIN : state => {
+    login : state => {
       return state.login
     },
-    DRAWER: state => {
+    drawer: state => {
       return state.drawer
     },
-    MANUFACTURER: state => {
+    manufacturer: state => {
       return state.manufacturer
     },
-    PRODUCTS: state => {
-      return state.manufacturer
+    products: state => {
+      return state.products
     },
     storages: state => {
       return state.stores
@@ -33,14 +34,17 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
-    SET_LOGIN : (state, payload) => {
+    set_login : (state, payload) => {
       state.login = payload
     },
-    SET_DRAWER: (state,payload) => {
+    set_drawer: (state,payload) => {
       state.drawer = payload
     },
-    SET_MANUFACTURER: (state,payload) => {
+    set_manufacturer: (state,payload) => {
       state.manufacturer = payload
+    },
+    set_products: (state, payload) => {
+      state.products = payload
     },
     set_models: (state,payload) => {
       state.models = payload
@@ -51,11 +55,29 @@ export const store = new Vuex.Store({
 
   },
   actions: {
-    async SETMANUFACTURER({commit}) {
+    set_login: async ({commit}) => {
+      try {
+        let username = localStorage.getItem('login');
+        let res = await fetch('http://localhost:3000/api/user/' + username)
+          .then(res => res.json());
+        commit('set_login', res)
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    set_manufacturer: async ({commit}) =>  {
       try {
         let res = await fetch('http://localhost:3000/api/manufacturers/all').then(res => res.json());
-        commit('SET_MANUFACTURER', res)
+        commit('set_manufacturer', res)
       } catch(err) {
+        console.log(err)
+      }
+    },
+    set_products: async ({commit}) => {
+      try {
+        let res = await fetch('http://localhost:3000/api/products/all').then(res => res.json());
+        commit('set_products',res)
+      } catch (err) {
         console.log(err)
       }
     },
@@ -71,7 +93,6 @@ export const store = new Vuex.Store({
     set_stores: async ({commit}) => {
       try {
         let res = await fetch('http://localhost:3000/api/stores/all').then(res => res.json());
-        console.log(res)
         commit('set_stores',res);
       }
       catch (err) {
