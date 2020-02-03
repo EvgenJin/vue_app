@@ -11,8 +11,7 @@ import ProductPage from "../components/ProductPage";
 Vue.use(Router);
 
 const ifAuthenticated = (to, from, next) => {
-  if (localStorage.getItem('jwt')) {
-    // console.log(localStorage.getItem('login'));
+  if (localStorage.getItem('jwt') && localStorage.getItem('login')) {
     next();
     return
   }
@@ -41,45 +40,29 @@ export default new Router({
         {
           path: 'EditItem',
           name: 'EditItem',
-          alias: '',
           component: EditItem
         },
         {
           path: 'ListProducts',
           name: 'ListProducts',
-          alias: '',
           component: ListProducts
         },
         {
           path: 'ListStores',
           name: 'ListStores',
-          alias: '',
           component: ListStores
         },
         {
           path:'ListTransfers',
           name:'ListTransfers',
-          alias: '',
           component: ListTransfers
         },
         {
           path:'ProductPage',
           name:'ProductPage',
           component: ProductPage
-
         }
       ]
     }
-    // {
-    //   path: '/HelloWorld',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld
-    //   // ,      beforeEnter: ifAuthenticated
-    // },
-    // {
-    //   path:'/addItem',
-    //   name:'AddItem',
-    //   component: AddItem
-    // }
   ]
 })
