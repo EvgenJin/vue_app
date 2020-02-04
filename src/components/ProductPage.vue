@@ -1,6 +1,8 @@
 <template>
   <v-container fluid>
     <v-row class="justify-center">
+      <v-btn color="accent" large @click.stop="showScheduleForm=true"/>
+        <ScheduleForm v-model="showScheduleForm" />
       <v-col cols="12" sm="12" md="8">
         <v-card shaped>
           <v-card-title class="justify-center">ТМЦ</v-card-title>
@@ -117,10 +119,15 @@
 </template>
 
 <script>
+import { bus } from '../main';
+import ScheduleForm from "./ScheduleForm";
     export default {
         name: "ProductPage",
         data: () => ({
-            product: {},
+            showScheduleForm: false,
+            product: {
+                man_info:{}
+            },
             new_storage:{},
             switch_update:false,
             switch_transfer:false
@@ -169,8 +176,17 @@
                     })
             }
         },
+
+        components: {
+            ScheduleForm
+        },
         mounted() {
           this.init();
+        },
+        created() {
+            bus.$on('input', (data) => {
+                // console.log(data)
+            })
         }
     }
 </script>

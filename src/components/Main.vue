@@ -1,5 +1,6 @@
 <template>
   <v-app id="inspire">
+
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -125,3 +126,9 @@
     }
   }
 </script>
+<style>
+  #inspire {
+    background: url( '../assets/back.jpg') no-repeat;
+    background-size: cover;
+  }
+</style>
