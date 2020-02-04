@@ -1,9 +1,19 @@
 <template>
   <v-container fluid>
+    <div class="text-center ma-2">
+      <!--  уведомлялка    -->
+      <v-snackbar
+        v-model="snackbar.on"
+        top
+        :timeout=2000
+      >{{snackbar.msg}}
+        <v-btn color="pink" text @click="snackbar.on = false">Close</v-btn>
+      </v-snackbar>
+    </div>
     <v-row class="justify-center">
       <v-col cols="12" sm="12" md="8">
         <v-card shaped>
-          <v-card-title class="justify-center">ТМЦ</v-card-title>
+          <v-card-title class="justify-center">Страница продукта</v-card-title>
           <v-card-subtitle>Описание</v-card-subtitle>
           <v-list-item dense>
             <v-list-item-content>
@@ -110,6 +120,7 @@
           <v-row class="justify-center" v-if="switch_update">
             <v-btn @click="update">Обновить</v-btn>
           </v-row>
+          <v-spacer></v-spacer>
         </v-card>
       </v-col>
     </v-row>
@@ -120,12 +131,27 @@
     export default {
         name: "ProductPage",
         data: () => ({
+            snackbar: {
+              on:false,
+              msg:null
+            },
             product: {},
             new_storage:{},
             switch_update:false,
             switch_transfer:false
         }),
-
+        watch: {
+          switch_update: function (val) {
+            if (val) {
+              this.switch_transfer = false
+            }
+          },
+          switch_transfer: function (val) {
+            if (val) {
+              this.switch_update = false
+            }
+          }
+        },
         computed : {
             list_manufacturers() {
                 return this.$store.state.manufacturer.map(product => ({id:product.id,name:product.name}))
@@ -156,10 +182,36 @@
                 };
             },
             update() {
+              let update_product = {
+                id:this.product.id,
+                model:this.product.model,
+                manufacturer_id: this.product.man_info.id,
+                serial_num:this.product.serial_num,
+                inventory_num: this.product.inventory_num,
+                ip_addr: this.product.ip_addr,
+                store_id: this.product.storage.id,
+              };
+                fetch('http://localhost:3000/api/products/' + update_product.id, {
+                  method: "PUT",
+                  headers: {"Content-Type": "application/json"},
+                  body: JSON.stringify(update_product)
+                }).then((res) => {
+                  if (res.status == 200) {
+                    this.snackbar.on = true;
+                    this.snackbar.msg = 'Продукт обновлен';
+                    this.switch_update = false;
+                  }
+                  if (res.status == 500) {
+                    this.snackbar.on = true;
+                    this.snackbar.msg = res.text();
+                    this.switch_update = false;
+                  }
+                })
             },
             init() {
                 fetch('http://localhost:3000/api/products/2').then(res => res.json())
                     .then(res => {
+                        this.product.id = res.id;
                         this.product.man_info = res.man_info;
                         this.product.model = res.model;
                         this.product.serial_num = res.serial_num;

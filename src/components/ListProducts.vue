@@ -47,7 +47,8 @@
         },
         methods: {
             onClickRow(row) {
-                console.log(row.id)
+              console.log(row)
+              // this.$router.push({ name: 'ProductPage', params: { id : this.result.id } });
             }
         },
         mounted() {
