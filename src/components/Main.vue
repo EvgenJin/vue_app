@@ -1,6 +1,5 @@
 <template>
   <v-app id="inspire">
-
     <v-navigation-drawer
      v-model="drawer"
      app dark clipped>
@@ -53,10 +52,11 @@
     data: () => ({
       drawer: null,
       items: [
-        { icon: 'add_shopping_cart', text: 'Добавить товар' , url : "AddItem"},
-        { icon: 'devices', text: 'Товары',url: "ListProducts" },
+        { icon: 'add_shopping_cart', text: 'Добавить продукт' , url : "AddItem"},
+        { icon: 'devices', text: 'Продукты',url: "ListProducts" },
         { icon: 'store', text: 'Склады', url: "ListStores" },
         { icon: 'compare_arrows', text: 'Трансферы',url:"ListTransfers" },
+        { icon: 'list_alt', text: 'Модели',url:"ListModels" },
       ]
     }),
     computed: {

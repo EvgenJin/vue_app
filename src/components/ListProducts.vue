@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row class="justify-center">
-      <v-col cols="12" sm="12" md="8">
+      <v-col cols="12" sm="12" md="10">
         <v-card>
           <v-card-title>
             Техника

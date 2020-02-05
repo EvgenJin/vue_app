@@ -1,26 +1,14 @@
 <template>
   <v-container fluid>
-    <div class="text-center ma-2">
-      <!--  уведомлялка    -->
-      <v-snackbar
-        v-model="snackbar.on"
-        top
-        :timeout=2000
-      >{{snackbar.msg}}
-        <v-btn color="pink" text @click="snackbar.on = false">Close</v-btn>
-      </v-snackbar>
-    </div>
     <v-row class="justify-center">
-      <v-btn color="accent" large @click.stop="showScheduleForm=true"/>
-        <ScheduleForm v-model="showScheduleForm" />
-      <v-col cols="12" sm="12" md="8">
+      <v-col cols="12" xs="12" md="8">
         <v-card shaped>
           <v-card-title class="justify-center">Страница продукта</v-card-title>
           <v-card-subtitle>Описание</v-card-subtitle>
           <v-list-item dense>
             <v-list-item-content>
               <v-row>
-                <v-col sm="6">
+                <v-col cols="12" xs="12" md="6">
                   <v-select
                     v-model="product.man_info"
                     :items="list_manufacturers"
@@ -31,7 +19,7 @@
                     :readonly=!switch_update
                   />
                 </v-col>
-                <v-col sm="6">
+                <v-col cols="12" xs="12" md="6">
                   <v-select
                     v-model="product.model"
                     :items="list_products"
@@ -40,9 +28,7 @@
                     :readonly=!switch_update
                   />
                 </v-col>
-              </v-row>
-              <v-row>
-                <v-col sm="6">
+                <v-col cols="12" xs="12" md="6">
                   <v-text-field
                     v-model="product.serial_num"
                     class="styled-input"
@@ -51,7 +37,7 @@
                     :readonly=!switch_update
                   />
                 </v-col>
-                <v-col sm="6">
+                <v-col cols="12" xs="12" md="6">
                   <v-text-field
                     v-model="product.inventory_num"
                     label="Инвентарный номер"
@@ -59,7 +45,7 @@
                     :readonly=!switch_update
                   />
                 </v-col>
-                <v-col sm="6">
+                <v-col cols="12" xs="12" md="6">
                   <v-text-field
                     v-model="product.ip_addr"
                     label="ip адрес"
@@ -67,7 +53,7 @@
                     :readonly=!switch_update
                   />
                 </v-col>
-                <v-col sm="6">
+                <v-col cols="12" xs="12" md="6">
                   <v-text-field
                     v-model="product.mac_addr"
                     label="mac адрес"
@@ -75,7 +61,7 @@
                     :readonly=!switch_update
                   />
                 </v-col>
-                <v-col sm="12">
+                <v-col cols="12" xs="12">
                   <v-select
                     v-model="product.storage"
                     :items="list_storages"
@@ -90,16 +76,16 @@
           </v-list-item>
           <v-card-actions>
             <v-row class="justify-center">
-              <v-col sm="4">
+              <v-col xs="4">
                 <v-switch
                   v-model="switch_update"
                   label="обновить"
                 ></v-switch>
               </v-col>
-              <v-col sm="4">
+              <v-col xs="4">
 
               </v-col>
-              <v-col sm="4">
+              <v-col xs="4">
                 <v-switch
                   v-model="switch_transfer"
                   label="переместить"
@@ -130,12 +116,14 @@
 </template>
 
 <script>
-import { bus } from '../main';
-import ScheduleForm from "./ScheduleForm";
     export default {
         name: "ProductPage",
         data: () => ({
             showScheduleForm: false,
+            snackbar: {
+              on:false,
+              msg:''
+            },
             product: {
                 man_info:{}
             },
@@ -224,17 +212,8 @@ import ScheduleForm from "./ScheduleForm";
                     })
             }
         },
-
-        components: {
-            ScheduleForm
-        },
         mounted() {
           this.init();
-        },
-        created() {
-            bus.$on('input', (data) => {
-                // console.log(data)
-            })
         }
     }
 </script>

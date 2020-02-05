@@ -8,6 +8,7 @@ import ListProducts from "../components/ListProducts";
 import ListStores from "../components/ListStores";
 import ListTransfers from "../components/ListTransfers";
 import ProductPage from "../components/ProductPage";
+import ListModels from "../components/ListModels";
 Vue.use(Router);
 
 const ifAuthenticated = (to, from, next) => {
@@ -61,6 +62,11 @@ export default new Router({
           path:'ProductPage',
           name:'ProductPage',
           component: ProductPage
+        },
+        {
+          path:'ListModels',
+          name:'ListModels',
+          component: ListModels
         }
       ]
     }
