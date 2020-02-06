@@ -1,3 +1,4 @@
+<!--страница добавления продукта-->
 <template>
   <v-container fluid>
     <v-row class="justify-center">
@@ -10,21 +11,22 @@
             <v-list-item-content>
             <v-row>
               <v-col cols="12" xs="12" sm="6">
-              <v-select
-                v-model="product.manufacturer"
-                :items="list_manufacturers"
-                item-text="name"
-                label="Производитель"
-                outlined return-object>
-              </v-select>
+                <v-autocomplete
+                  v-model="product.manufacturer"
+                  :items="list_manufacturers"
+                  outlined
+                  item-text="name"
+                  label="Производитель"
+                  return-object
+                />
               </v-col>
               <v-col cols="12" xs="12" sm="6">
-                <v-select
+                <v-autocomplete
                   v-model="product.model"
                   :items="list_products"
-                  label="Модель"
                   outlined
-                ></v-select>
+                  label="Модель"
+                />
               </v-col>
                 <v-col cols="12" xs="12" sm="6">
                   <v-text-field v-model="product.serial_num" class="styled-input" label="Серийный номер" outlined></v-text-field>
@@ -39,13 +41,13 @@
                   <v-text-field v-model="product.mac_addr" label="mac адрес" outlined></v-text-field>
                 </v-col>
                 <v-col xs="12">
-                  <v-select
+                  <v-autocomplete
                     v-model="product.storage"
                     :items="list_storages"
                     label="Склад"
                     item-text="address"
                     outlined return-object
-                  ></v-select>
+                  />
                 </v-col>
               </v-row>
             </v-list-item-content>

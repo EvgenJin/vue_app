@@ -1,12 +1,22 @@
+<!--страница списка моделей (справочник)-->
 <template>
   <v-container fluid>
     <v-row class="justify-center">
       <v-col cols="12" sm="12" md="8">
-        <AddModel v-model="showAddModel"/>
-        <AddManufacturer v-model="showAddManufacturer"/>
-        <v-btn color="primary" large @click.stop="showAddManufacturer=true">Добавить Производителя</v-btn>
-        <v-btn color="primary" large @click.stop="showAddModel=true">Добавить Модель</v-btn>
+        <AddModel/>
+        <AddManufacturer/>
         <v-card>
+          <v-tabs
+            fixed-tabs
+            background-color="primary"
+          >
+            <v-tab @click.stop="callManufacturersAdd">
+              Добавить Производителя
+            </v-tab>
+            <v-tab @click.stop="callModelAdd">
+              Добавить Модель
+            </v-tab>
+          </v-tabs>
           <v-card-title>
             Модели
             <v-spacer></v-spacer>
@@ -55,25 +65,14 @@ import AddManufacturer from "./AddManufacturer";
         },
       },
       methods: {
-        addModel(data){
-          fetch('http://localhost:3000/api/models', {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(data)
-          }).then((res) => {
-             if (res.status == 200) {
-               // this.snackbar_notice('Продукт добавлен');
-             }
-             else {
-               // this.snackbar_notice('Ошибка добавления продукта');
-             }
-          })
+        callManufacturersAdd () {
+            bus.$emit('callManufacturersAdd')
+        },
+        callModelAdd () {
+            bus.$emit('callModelAdd')
         }
       },
       created() {
-        bus.$on('input', (data) => {
-          this.addModel(data)
-        })
       }
     }
 </script>
