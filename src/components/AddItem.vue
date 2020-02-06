@@ -1,13 +1,7 @@
 <template>
   <v-container fluid>
     <v-row class="justify-center">
-      <v-snackbar
-        v-model="snackbar.on"
-        top
-        :timeout=2000
-      >{{snackbar.msg}}
-        <v-btn color="primary" text @click="snackbar.on = false">Close</v-btn>
-      </v-snackbar>
+      <snackbar_alert/>
       <v-col cols="12" xs="12" md="10">
         <v-card shaped>
           <v-card-title class="justify-center">ТМЦ</v-card-title>
@@ -15,57 +9,50 @@
           <v-list-item dense>
             <v-list-item-content>
             <v-row>
-            <v-col cols="12" xs="12" sm="6">
-            <v-select
-              v-model="product.manufacturer"
-              :items="list_manufacturers"
-              item-text="name"
-              label="Производитель"
-              outlined return-object>
-            </v-select>
-            </v-col>
-            <v-col cols="12" xs="12" sm="6">
+              <v-col cols="12" xs="12" sm="6">
               <v-select
-                v-model="product.model"
-                :items="list_products"
-                label="Модель"
-                outlined
-              ></v-select>
-            </v-col>
-              <v-col cols="12" xs="12" sm="6">
-                <v-text-field v-model="product.serial_num" class="styled-input" label="Серийный номер" outlined></v-text-field>
+                v-model="product.manufacturer"
+                :items="list_manufacturers"
+                item-text="name"
+                label="Производитель"
+                outlined return-object>
+              </v-select>
               </v-col>
               <v-col cols="12" xs="12" sm="6">
-                <v-text-field v-model="product.inventory_num" label="Инвентарный номер" outlined></v-text-field>
-              </v-col>
-              <v-col cols="12" xs="12" sm="6">
-                <v-text-field v-model="product.ip_addr" label="ip адрес" outlined></v-text-field>
-              </v-col>
-              <v-col cols="12" xs="12" sm="6">
-                <v-text-field v-model="product.mac_addr" label="mac адрес" outlined></v-text-field>
-              </v-col>
-              <v-col xs="12">
                 <v-select
-                  v-model="product.storage"
-                  :items="list_storages"
-                  label="Склад"
-                  item-text="address"
-                  outlined return-object
+                  v-model="product.model"
+                  :items="list_products"
+                  label="Модель"
+                  outlined
                 ></v-select>
               </v-col>
-            </v-row>
+                <v-col cols="12" xs="12" sm="6">
+                  <v-text-field v-model="product.serial_num" class="styled-input" label="Серийный номер" outlined></v-text-field>
+                </v-col>
+                <v-col cols="12" xs="12" sm="6">
+                  <v-text-field v-model="product.inventory_num" label="Инвентарный номер" outlined></v-text-field>
+                </v-col>
+                <v-col cols="12" xs="12" sm="6">
+                  <v-text-field v-model="product.ip_addr" label="ip адрес" outlined></v-text-field>
+                </v-col>
+                <v-col cols="12" xs="12" sm="6">
+                  <v-text-field v-model="product.mac_addr" label="mac адрес" outlined></v-text-field>
+                </v-col>
+                <v-col xs="12">
+                  <v-select
+                    v-model="product.storage"
+                    :items="list_storages"
+                    label="Склад"
+                    item-text="address"
+                    outlined return-object
+                  ></v-select>
+                </v-col>
+              </v-row>
             </v-list-item-content>
           </v-list-item>
-          <v-alert :value="alert_notice.on" :type="alert_notice.type">
-            {{alert_notice.message}}
-          </v-alert>
           <v-card-actions>
             <v-row class="justify-center">
-              <v-btn
-                raised
-                color="primary"
-                @click="handleSubmit()"
-              >Добавить на склад</v-btn>
+              <v-btn color="primary" @click="handleSubmit()">Добавить на склад</v-btn>
             </v-row>
           </v-card-actions>
         </v-card>
@@ -75,13 +62,12 @@
 </template>
 
 <script>
+import { bus } from '../main';
+import snackbar_alert from "./common/snackbar_alert";
     export default {
         data: () => ({
-          snackbar: {
-            on:false,
-            msg:''
-          },
-          product: {
+          name: "Product"
+          ,product: {
             manufacturer: {id:null, name:null},
             model: null,
             serial_num: null,
@@ -97,7 +83,9 @@
             type_error: null
           },
         }),
-        name: "Product",
+        components: {
+          snackbar_alert
+        },
         computed : {
           list_manufacturers() {
             return this.$store.state.manufacturer.map(product => ({id:product.id,name:product.name}))
@@ -114,16 +102,14 @@
             this.drawer = false;
         }
         , methods: {
-          erase_form(){
+          test () {
+            this.set_notice('hah','error')
+          },
+          erase_form() {
             this.product = {
               manufacturer:{},
               storage: {}
             }
-          },
-          snackbar_notice(str) {
-            this.snackbar.on = true;
-            this.snackbar.msg = str;
-            this.showScheduleForm=false
           },
           handleSubmit() {
             let product_object = {
@@ -141,53 +127,17 @@
                 body: JSON.stringify(product_object)
             }).then((res) => {
               if (res.status == 200) {
-                this.snackbar_notice('Продукт добавлен');
+                this.set_notice('Продукт добавлен','success')
                 this.erase_form();
               }
               if (res.status == 500) {
-                this.snackbar_notice('Ошибка добавления Продукта');
+                this.set_notice('Ошибка добавления Продукта','error')
               }
             })
           },
-          test(){
-             console.log(this.$store.getters.login)
-          },
-          alarma(str,type) {
-            this.alert_notice.on = true;
-            this.alert_notice.type = type;
-            this.alert_notice.message = str;
-            setTimeout(() => {
-              this.alert_notice.on = false;
-            }, 2000)
-          },
-            // getProductInfo() {
-            //     this.$route.params.id = 10;
-            //     if (typeof (this.$route.params.id) !== 'undefined') {
-            //         let id = this.$route.params.id;
-            //         fetch('http://localhost:8080/JEE7_REST/api/products/' + id, {method: "GET"}).then(res => res.json())
-            //             .then(res => {
-            //                 let doubles = res.img_array.map(function (num) {
-            //                     let obj = {id: "", src: ""};
-            //                     obj.src = num;
-            //                     return obj
-            //                 });
-            //                 res.img_array = doubles;
-            //                 this.product = res;
-            //             })
-            //     }
-            // },
-            // getProductStorages() {
-            //     this.$route.params.id = 10;
-            //     if (typeof (this.$route.params.id) !== 'undefined') {
-            //         let id = this.$route.params.id;
-            //         fetch('http://localhost:8080/JEE7_REST/api/products/' + id + '/storages', {method: "GET"}).then(res => res.json())
-            //             .then(res => {
-            //                 res.forEach((el) => {
-            //                     this.storages.push(el);
-            //                 })
-            //             })
-            //     }
-            // }
+          set_notice(str,type) {
+            bus.$emit('snackbar_alert',{str:str,type:type});
+          }
         }
     }
 </script>

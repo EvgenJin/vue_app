@@ -2,6 +2,8 @@
   <v-dialog v-model="show" max-width="800px">
   <v-container>
     <v-card>
+      <v-card-title class="justify-center">Модель</v-card-title>
+      <v-card-subtitle>Добавить технику</v-card-subtitle>
       <v-row class="justify-center">
         <v-col sm="10">
           <v-select

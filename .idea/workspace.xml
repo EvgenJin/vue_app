@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d5e2d72-caec-4e18-8322-e52814d7b62a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/AddManufacturer.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/snackbar_alert.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ListProducts.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListProducts.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Main.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProductPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AddItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ListModels.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListModels.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ScheduleForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddModel.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +18,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -63,7 +66,7 @@
       <workItem from="1580058245997" duration="7101000" />
       <workItem from="1580240036000" duration="4897000" />
       <workItem from="1580327852159" duration="3510000" />
-      <workItem from="1580710566964" duration="16107000" />
+      <workItem from="1580710566964" duration="39296000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <created>1580732329169</created>

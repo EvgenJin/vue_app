@@ -1,16 +1,11 @@
 <template>
   <v-container fluid>
     <v-row class="justify-center">
-      <!--  уведомлялка    -->
-      <v-snackbar
-        v-model="snackbar.on"
-        top
-        :timeout=2000
-      >{{snackbar.msg}}
-        <v-btn color="primary" text @click="snackbar.on = false">Close</v-btn>
-      </v-snackbar>
       <v-col cols="12" sm="12" md="8">
-        <ScheduleForm v-model="showScheduleForm"/>
+        <AddModel v-model="showAddModel"/>
+        <AddManufacturer v-model="showAddManufacturer"/>
+        <v-btn color="primary" large @click.stop="showAddManufacturer=true">Добавить Производителя</v-btn>
+        <v-btn color="primary" large @click.stop="showAddModel=true">Добавить Модель</v-btn>
         <v-card>
           <v-card-title>
             Модели
@@ -24,7 +19,6 @@
             ></v-text-field>
           </v-card-title>
           <v-data-table
-            @click:row="onClickRow"
             :headers="headers"
             :items="list_models"
             :search="search"
@@ -32,21 +26,19 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-btn color="primary" large @click.stop="showScheduleForm=true">Добавить Модель</v-btn>
   </v-container>
 </template>
 
 <script>
 import { bus } from '../main';
-import ScheduleForm from "./ScheduleForm";
+import AddModel from "./AddModel";
+import AddManufacturer from "./AddManufacturer";
+
     export default {
       name: "ListModels",
       data: () => ({
-          showScheduleForm: false,
-          snackbar: {
-            on:false,
-            msg:''
-          },
+          showAddModel: false,
+          showAddManufacturer:false,
           search: '',
           headers: [
             { text: 'Модель',align: 'left',value: 'name'},
@@ -54,7 +46,8 @@ import ScheduleForm from "./ScheduleForm";
           ]
       }),
       components: {
-        ScheduleForm
+        AddManufacturer,
+        AddModel
       },
       computed : {
         list_models() {
@@ -62,15 +55,6 @@ import ScheduleForm from "./ScheduleForm";
         },
       },
       methods: {
-        snackbar_notice(str) {
-          this.snackbar.on = true;
-          this.snackbar.msg = str;
-          this.showScheduleForm=false
-        },
-        onClickRow(row) {
-          // console.log(row.name)
-          // this.$router.push({ name: 'ProductPage', params: { id : this.result.id } });
-        },
         addModel(data){
           fetch('http://localhost:3000/api/models', {
             method: "POST",
@@ -78,10 +62,10 @@ import ScheduleForm from "./ScheduleForm";
             body: JSON.stringify(data)
           }).then((res) => {
              if (res.status == 200) {
-               this.snackbar_notice('Продукт добавлен');
+               // this.snackbar_notice('Продукт добавлен');
              }
              else {
-               this.snackbar_notice('Ошибка добавления продукта');
+               // this.snackbar_notice('Ошибка добавления продукта');
              }
           })
         }
