@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d5e2d72-caec-4e18-8322-e52814d7b62a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/AddManufacturer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/common/snackbar_alert.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/AddItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AddModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddModel.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ListModels.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListModels.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ScheduleForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddModel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ListProducts.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListProducts.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ListTransfers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListTransfers.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/store.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +42,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
@@ -67,6 +70,7 @@
       <workItem from="1580240036000" duration="4897000" />
       <workItem from="1580327852159" duration="3510000" />
       <workItem from="1580710566964" duration="39296000" />
+      <workItem from="1581079471334" duration="6628000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <created>1580732329169</created>
@@ -99,6 +103,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="591" y="373" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1581081166691">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="591" y="373" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1680.1010@0.0.1680.1010" timestamp="1581081166691" />
     <state x="290" y="72" width="1273" height="882" key="CommitChangelistDialog2" timestamp="1580732327139">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -111,9 +119,9 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="432" y="240" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1580732338641" />
-    <state x="885" y="227" key="run.anything.popup" timestamp="1580817178375">
+    <state x="885" y="227" key="run.anything.popup" timestamp="1581082703429">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="885" y="227" key="run.anything.popup/0.0.1680.1010@0.0.1680.1010" timestamp="1580817178375" />
+    <state x="885" y="227" key="run.anything.popup/0.0.1680.1010@0.0.1680.1010" timestamp="1581082703429" />
   </component>
 </project>

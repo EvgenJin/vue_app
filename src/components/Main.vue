@@ -74,6 +74,7 @@
         this.$store.dispatch('set_stores');
         this.$store.dispatch('set_products');
         this.$store.dispatch('set_login');
+        this.$store.dispatch('set_producttypes');
     },
     methods : {
       logout() {

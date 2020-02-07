@@ -2,6 +2,14 @@
   <v-container fluid>
     <v-row class="justify-center">
       <v-col cols="12" sm="12" md="10">
+        <v-tabs
+          fixed-tabs
+          background-color="primary"
+        >
+          <v-tab @click.stop="transfer_sellected">
+            Переместить выбранные
+          </v-tab>
+        </v-tabs>
         <v-card>
           <v-card-title>
             Техника
@@ -15,6 +23,8 @@
             ></v-text-field>
           </v-card-title>
           <v-data-table
+            v-model="selected"
+            show-select
             @click:row="onClickRow"
             :headers="headers"
             :items="list_products"
@@ -31,12 +41,14 @@
         data () {
             return {
                 search: '',
+                selected: [],
                 headers: [
+                    { text: 'Тип',align: 'left',value: 'type_info.name'},
                     { text: 'Модель',align: 'left',value: 'model'},
                     { text: 'Производитель', value: 'man_info.name' },
                     { text: 'Серийный номер', value: 'serial_num' },
                     { text: 'Инвентарный номер', value: 'inventory_num' },
-                    { text: 'ip адрес', value: 'ip_addr' }
+                    { text: 'Хранение', value: 'store_info.name' },
                 ]
             }
         },
@@ -49,6 +61,13 @@
             onClickRow(row) {
               console.log(row)
               // this.$router.push({ name: 'ProductPage', params: { id : this.result.id } });
+            },
+            transfer_sellected() {
+              if (this.selected.length > 0) {
+                this.selected.forEach(el => {
+                  console.log(el.model)
+                })
+              }
             }
         },
         mounted() {

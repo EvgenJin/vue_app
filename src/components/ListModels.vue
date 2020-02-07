@@ -51,8 +51,9 @@ import AddManufacturer from "./AddManufacturer";
           showAddManufacturer:false,
           search: '',
           headers: [
-            { text: 'Модель',align: 'left',value: 'name'},
-            { text: 'Производитель', value: 'man_info.name'},
+            { text: 'Тип', value: 'types_info.name', align: 'center'},
+            { text: 'Модель',align: 'left',value: 'name',  align: 'center'},
+            { text: 'Производитель', value: 'man_info.name',  align: 'center'},
           ]
       }),
       components: {

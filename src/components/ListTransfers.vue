@@ -61,6 +61,7 @@
                 fetch('http://localhost:3000/api/transfers/all').then(res => res.json())
                     .then(res => {
                         res.forEach(el => {
+                            let tr_date = new Date(el.tr_date).toLocaleDateString();
                             let trans = {
                               store_f : this.nvl2(el.store_f,'1','2').name,
                               store_t: el.store_t.name,
@@ -69,9 +70,10 @@
                               inventory_num: el.product_info.inventory_num,
                               serial_num: el.product_info.serial_num,
                               user: el.user,
-                              date: el.tr_date,
+                              date: tr_date,
                               ip_addr: el.product_info.ip_addr
                             };
+
                             this.data.push(trans)
                         })
                     })

@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
     manufacturer: [],
     products: [],
     stores: [],
-    models: []
+    models: [],
+    producttypes: []
   },
   getters: {
     login : state => {
@@ -31,6 +32,9 @@ export const store = new Vuex.Store({
     },
     models: state => {
       return state.models
+    },
+    producttypes: state => {
+      return state.producttypes
     }
   },
   mutations: {
@@ -51,6 +55,9 @@ export const store = new Vuex.Store({
     },
     set_stores: (state,payload) => {
       state.stores = payload
+    },
+    set_producttypes: (state,payload) => {
+      state.producttypes = payload
     },
 
   },
@@ -94,6 +101,15 @@ export const store = new Vuex.Store({
       try {
         let res = await fetch('http://localhost:3000/api/stores/all').then(res => res.json());
         commit('set_stores',res);
+      }
+      catch (err) {
+        console.log(err)
+      }
+    },
+    set_producttypes: async ({commit}) => {
+      try {
+        let res = await fetch('http://localhost:3000/api/producttypes/all').then(res => res.json());
+        commit('set_producttypes',res);
       }
       catch (err) {
         console.log(err)
