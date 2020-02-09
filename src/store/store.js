@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
     products: [],
     stores: [],
     models: [],
-    producttypes: []
+    producttypes: [],
+    session:{}
   },
   getters: {
     login : state => {
@@ -35,7 +36,11 @@ export const store = new Vuex.Store({
     },
     producttypes: state => {
       return state.producttypes
+    },
+    session: state => {
+      return state.session
     }
+
   },
   mutations: {
     set_login : (state, payload) => {
@@ -58,6 +63,9 @@ export const store = new Vuex.Store({
     },
     set_producttypes: (state,payload) => {
       state.producttypes = payload
+    },
+    set_session: (state,payload) => {
+      state.session = payload
     },
 
   },
@@ -110,6 +118,15 @@ export const store = new Vuex.Store({
       try {
         let res = await fetch('http://localhost:3000/api/producttypes/all').then(res => res.json());
         commit('set_producttypes',res);
+      }
+      catch (err) {
+        console.log(err)
+      }
+    },
+    set_session: async ({commit}) => {
+      try {
+        let res = await fetch('http://localhost:3000/api/session/get').then(res => res.json());
+        commit('set_session',res);
       }
       catch (err) {
         console.log(err)
