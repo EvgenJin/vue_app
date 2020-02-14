@@ -32,15 +32,16 @@
             return {
                 search: '',
                 headers: [
-                    { text: 'Дата', value: 'date'},
-                    { text: 'Откуда',align: 'left',value: 'store_f'},
-                    { text: 'Куда', value: 'store_t' },
+                    { text: 'Дата', value: 'tr_date'},
+                    { text: 'Откуда',align: 'left',value: 'store_from'},
+                    { text: 'Куда', value: 'store_to' },
                     { text: 'Код', value: 'code'},
-                    { text: 'Модель',value:'model'},
+                    { text: 'Производитель', value: 'man_name'},
+                    { text: 'Модель',value:'model_name'},
                     { text: 'Инвентарный',value:'inventory_num'},
                     { text: 'Серийный',value:'serial_num'},
                     { text: 'ip адресс', value: 'ip_addr'},
-                    { text: 'Юзер',value:'user'},
+                    { text: 'Юзер',value:'user_name'},
                 ],
                 data:[]
             }
@@ -49,34 +50,34 @@
         },
         methods: {
             onClickRow(row) {
-                console.log(row.id)
+                console.log(row)
             },
-            nvl2(str1,str2,str3) {
+            nvl2(str1,str2) {
                 if (!str1 || str1 == null) {
-                  return str3
+                  return str2
                 }
                 else return str1;
             },
             init() {
-                fetch('http://localhost:3000/api/transfers/all').then(res => res.json())
-                    .then(res => {
-                        res.forEach(el => {
-                            let tr_date = new Date(el.tr_date).toLocaleDateString();
-                            let trans = {
-                              store_f : this.nvl2(el.store_f,'1','2').name,
-                              store_t: el.store_t.name,
-                              code: el.code,
-                              model: el.product_info.model,
-                              inventory_num: el.product_info.inventory_num,
-                              serial_num: el.product_info.serial_num,
-                              user: el.user,
-                              date: tr_date,
-                              ip_addr: el.product_info.ip_addr
-                            };
-
-                            this.data.push(trans)
-                        })
-                    })
+              fetch('http://localhost:3000/api/transfers/all').then(res => res.json())
+                .then(res => {
+                  res.forEach(el => {
+                    let trans = {
+                      id: el.id,
+                      store_from : this.nvl2(el.store_from,''),
+                      store_to: el.store_to,
+                      code: el.code,
+                      model_name: el.model_name,
+                      inventory_num: el.inventory_num,
+                      serial_num: el.serial_num,
+                      user_name: el.user_name,
+                      ip_addr: el.ip_addr,
+                      tr_date: new Date(el.tr_date).toLocaleDateString(),
+                      man_name: el.man_name
+                    };
+                    this.data.push(trans)
+                  })
+                })
             }
         },
         mounted() {

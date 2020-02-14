@@ -43,12 +43,12 @@
                 search: '',
                 selected: [],
                 headers: [
-                    { text: 'Тип',align: 'left',value: 'type_info.name'},
-                    { text: 'Модель',align: 'left',value: 'model'},
-                    { text: 'Производитель', value: 'man_info.name' },
+                    { text: 'Тип',align: 'left',value: 'type'},
+                    { text: 'Модель',align: 'left',value: 'model_name'},
+                    { text: 'Производитель', value: 'man_name' },
                     { text: 'Серийный номер', value: 'serial_num' },
                     { text: 'Инвентарный номер', value: 'inventory_num' },
-                    { text: 'Хранение', value: 'store_info.name' },
+                    { text: 'Хранение', value: 'store_name' },
                 ]
             }
         },

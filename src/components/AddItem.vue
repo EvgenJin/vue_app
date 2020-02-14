@@ -15,7 +15,7 @@
                 <v-autocomplete
                   v-model="product.producttype"
                   :items="list_producttypes"
-                  :rules="[v => !!v || 'должно быть заполнено']"
+                  :rules="[v => !!v.id || 'должно быть заполнено']"
                   required
                   outlined
                   dense
@@ -28,7 +28,7 @@
                 <v-autocomplete
                   v-model="product.manufacturer"
                   :items="list_manufacturers"
-                  :rules="[v => !!v || 'должно быть заполнено']"
+                  :rules="[v => !!v.id || 'должно быть заполнено']"
                   required
                   outlined
                   dense
@@ -41,11 +41,13 @@
                 <v-autocomplete
                   v-model="product.model"
                   :items="list_products"
-                  :rules="[v => !!v || 'должно быть заполнено']"
+                  :rules="[v => !!v.id || 'должно быть заполнено']"
                   required
                   outlined
                   dense
                   label="Модель"
+                  item-text="name"
+                  return-object
                 />
               </v-col>
                 <v-col cols="12" xs="12" sm="6">
@@ -86,7 +88,7 @@
                     v-model="product.storage"
                     :items="list_storages"
                     label="Склад"
-                    :rules="[v => !!v || 'должно быть заполнено']"
+                    :rules="[v => !!v.id || 'должно быть заполнено']"
                     required
                     dense
                     item-text="address"
@@ -98,7 +100,7 @@
           </v-list-item>
           <v-card-actions>
             <v-row class="justify-center">
-              <v-btn :disabled="!valid" color="primary" @click="handleSubmit()">Добавить на склад</v-btn>
+              <v-btn :disabled="!valid" color="primary" @click="test()">Добавить на склад</v-btn>
             </v-row>
           </v-card-actions>
         </v-card>
@@ -118,7 +120,7 @@ import snackbar_alert from "./common/snackbar_alert";
           ,product: {
             manufacturer: {id:null, name:null},
             producttype: {},
-            model: null,
+            model: {id:null, name:null},
             serial_num: null,
             inventory_num: null,
             ip_addr:null,
@@ -143,7 +145,7 @@ import snackbar_alert from "./common/snackbar_alert";
             return this.$store.state.manufacturer.map(product => ({id:product.id,name:product.name}))
           },
           list_products() {
-            return this.$store.state.models.filter(res => res.manufacturer_id === this.product.manufacturer.id && res.type_id === this.product.producttype.id).map(product => product.name);
+            return this.$store.state.models.filter(res => res.manufacturer_id === this.product.manufacturer.id && res.type_id === this.product.producttype.id).map(product => ({id:product.id, name:product.name}));
           },
           list_storages() {
             return this.$store.state.stores.map(res => ({id:res.id, name:res.name, address:res.address}))
@@ -154,7 +156,18 @@ import snackbar_alert from "./common/snackbar_alert";
         }
         , methods: {
           test () {
-            this.set_notice('hah','error')
+            let product_object = {
+              // type_id: this.product.producttype.id,
+              model: this.product.model.id,
+              // manufacturer_id: this.product.manufacturer.id,
+              serial_num: this.product.serial_num,
+              inventory_num: this.product.inventory_num,
+              ip_addr: this.product.ip_addr,
+              mac_addr: this.product.mac_addr,
+              store_to: this.product.storage.id,
+              user: this.$store.getters.login.login
+            };
+            console.log(product_object)
           },
           erase_form() {
             this.product = {
@@ -164,15 +177,13 @@ import snackbar_alert from "./common/snackbar_alert";
           },
           handleSubmit() {
             let product_object = {
-              type_id: this.product.producttype.id,
-              model: this.product.model,
-              manufacturer_id: this.product.manufacturer.id,
+              model_id: this.product.model.id,
               serial_num: this.product.serial_num,
               inventory_num: this.product.inventory_num,
               ip_addr: this.product.ip_addr,
               mac_addr: this.product.mac_addr,
               store_to: this.product.storage.id,
-              user: this.$store.getters.login
+              user: this.$store.getters.login.login
             };
             fetch('http://localhost:3000/api/products', {
                 method: "POST",
