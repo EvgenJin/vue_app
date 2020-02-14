@@ -157,9 +157,7 @@ import snackbar_alert from "./common/snackbar_alert";
         , methods: {
           test () {
             let product_object = {
-              // type_id: this.product.producttype.id,
-              model: this.product.model.id,
-              // manufacturer_id: this.product.manufacturer.id,
+              model_id: this.product.model.id,
               serial_num: this.product.serial_num,
               inventory_num: this.product.inventory_num,
               ip_addr: this.product.ip_addr,
