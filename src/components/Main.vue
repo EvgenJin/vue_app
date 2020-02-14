@@ -55,13 +55,13 @@
         { icon: 'add_shopping_cart', text: 'Добавить продукт' , url : "AddItem"},
         { icon: 'devices', text: 'Продукты',url: "ListProducts" },
         { icon: 'store', text: 'Склады', url: "ListStores" },
-        { icon: 'compare_arrows', text: 'Трансферы',url:"ListTransfers" },
-        { icon: 'list_alt', text: 'Модели',url:"ListModels" },
+        { icon: 'compare_arrows', text: 'Перемещения',url:"ListTransfers" },
+        { icon: 'print', text: 'Модели',url:"ListModels" },
       ]
     }),
     computed: {
       user(){
-          return this.$store.state.login;
+        return this.$store.state.login;
       }
     },
     created () {
@@ -75,6 +75,7 @@
         this.$store.dispatch('set_products');
         this.$store.dispatch('set_login');
         this.$store.dispatch('set_producttypes');
+        this.$store.dispatch('set_session');
     },
     methods : {
       logout() {

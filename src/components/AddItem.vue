@@ -191,8 +191,9 @@ import snackbar_alert from "./common/snackbar_alert";
                 body: JSON.stringify(product_object)
             }).then((res) => {
               if (res.status == 200) {
-                this.set_notice('Продукт добавлен','success')
+                this.set_notice('Продукт добавлен','success');
                 this.erase_form();
+                this.$store.dispatch('set_products');
               }
               if (res.status == 500) {
                 this.set_notice('Ошибка добавления Продукта','error')

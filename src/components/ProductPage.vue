@@ -1,129 +1,133 @@
 <template>
-  <v-container fluid>
-    <v-row class="justify-center">
-      <v-col cols="12" xs="12" md="8">
-        <v-card shaped>
-          <v-card-title class="justify-center">Страница продукта</v-card-title>
-          <v-card-subtitle>Описание</v-card-subtitle>
-          <v-list-item dense>
-            <v-list-item-content>
-              <v-row>
-                <v-col cols="12" xs="12" md="6">
-                  <v-select
-                    v-model="product.man_info"
-                    :items="list_manufacturers"
-                    item-text="name"
-                    label="Производитель"
-                    outlined
-                    return-object
-                    :readonly=!switch_update
-                  />
-                </v-col>
-                <v-col cols="12" xs="12" md="6">
-                  <v-select
-                    v-model="product.model"
-                    :items="list_products"
-                    label="Модель"
-                    outlined
-                    :readonly=!switch_update
-                  />
-                </v-col>
-                <v-col cols="12" xs="12" md="6">
-                  <v-text-field
-                    v-model="product.serial_num"
-                    class="styled-input"
-                    label="Серийный номер"
-                    outlined
-                    :readonly=!switch_update
-                  />
-                </v-col>
-                <v-col cols="12" xs="12" md="6">
-                  <v-text-field
-                    v-model="product.inventory_num"
-                    label="Инвентарный номер"
-                    outlined
-                    :readonly=!switch_update
-                  />
-                </v-col>
-                <v-col cols="12" xs="12" md="6">
-                  <v-text-field
-                    v-model="product.ip_addr"
-                    label="ip адрес"
-                    outlined
-                    :readonly=!switch_update
-                  />
-                </v-col>
-                <v-col cols="12" xs="12" md="6">
-                  <v-text-field
-                    v-model="product.mac_addr"
-                    label="mac адрес"
-                    outlined
-                    :readonly=!switch_update
-                  />
-                </v-col>
-                <v-col cols="12" xs="12">
-                  <v-select
-                    v-model="product.storage"
-                    :items="list_storages"
-                    label="Склад"
-                    disabled
-                    item-text="address"
-                    outlined return-object
-                  ></v-select>
-                </v-col>
-              </v-row>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
-            <v-row class="justify-center">
-              <v-col xs="4">
-                <v-switch
-                  v-model="switch_update"
-                  label="обновить"
-                ></v-switch>
-              </v-col>
-              <v-col xs="4">
-
-              </v-col>
-              <v-col xs="4">
-                <v-switch
-                  v-model="switch_transfer"
-                  label="переместить"
-                ></v-switch>
-              </v-col>
-            </v-row>
-          </v-card-actions>
-          <v-row class="justify-center" v-if="switch_transfer">
-            <v-col sm="12">
+  <v-dialog v-model="show" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <snackbar_alert/>
+    <v-card>
+      <v-toolbar dark color="primary">
+        <v-btn icon dark @click="show = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>Страница продукта</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn dark text @click="show = false">Выход</v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+      <v-list-item dense>
+        <v-list-item-content>
+          <v-row dense>
+            <v-col cols="12" xs="12" sm="6">
               <v-select
-                v-model="new_storage"
+                v-model="product.man_info"
+                :items="list_manufacturers"
+                item-text="name"
+                label="Производитель"
+                outlined
+                return-object
+                :readonly=!switch_update
+              />
+            </v-col>
+            <v-col cols="12" xs="12" sm="6">
+              <v-select
+                v-model="product.model"
+                :items="list_products"
+                label="Модель"
+                outlined
+                :readonly=!switch_update
+              />
+            </v-col>
+            <v-col cols="12" xs="12" sm="6">
+              <v-text-field
+                v-model="product.serial_num"
+                class="styled-input"
+                label="Серийный номер"
+                outlined
+                :readonly=!switch_update
+              />
+            </v-col>
+            <v-col cols="12" xs="12" sm="6">
+              <v-text-field
+                v-model="product.inventory_num"
+                label="Инвентарный номер"
+                outlined
+                :readonly=!switch_update
+              />
+            </v-col>
+            <v-col cols="12" xs="12" sm="6">
+              <v-text-field
+                v-model="product.ip_addr"
+                label="ip адрес"
+                outlined
+                :readonly=!switch_update
+              />
+            </v-col>
+            <v-col cols="12" xs="12" sm="6">
+              <v-text-field
+                v-model="product.mac_addr"
+                label="mac адрес"
+                outlined
+                :readonly=!switch_update
+              />
+            </v-col>
+            <v-col cols="12" xs="12">
+              <v-select
+                v-model="product.storage"
                 :items="list_storages"
-                label="Переместить на склад"
+                label="Склад"
+                disabled
                 item-text="address"
                 outlined return-object
               ></v-select>
             </v-col>
-            <v-btn :disabled="!allow_transfer" @click="transfer">Переместить</v-btn>
           </v-row>
-          <v-row class="justify-center" v-if="switch_update">
-            <v-btn @click="update">Обновить</v-btn>
-          </v-row>
-          <v-spacer></v-spacer>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+        </v-list-item-content>
+      </v-list-item>
+      <v-card-actions>
+        <v-row class="justify-center">
+          <v-col xs="4">
+            <v-switch
+              v-model="switch_update"
+              label="обновить"
+            ></v-switch>
+          </v-col>
+          <v-col xs="4">
+
+          </v-col>
+          <v-col xs="4">
+            <v-switch
+              v-model="switch_transfer"
+              label="переместить"
+            ></v-switch>
+          </v-col>
+        </v-row>
+      </v-card-actions>
+      <v-row class="justify-center" v-if="switch_transfer">
+        <v-col sm="12">
+          <v-select
+            v-model="new_storage"
+            :items="list_storages"
+            label="Переместить на склад"
+            item-text="address"
+            outlined return-object
+          ></v-select>
+        </v-col>
+        <v-btn :disabled="!allow_transfer" @click="transfer">Переместить</v-btn>
+      </v-row>
+      <v-row class="justify-center" v-if="switch_update">
+        <v-btn @click="update">Обновить</v-btn>
+      </v-row>
+      <v-spacer></v-spacer>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
+    import {bus} from "../main";
+    import snackbar_alert from "./common/snackbar_alert";
     export default {
         name: "ProductPage",
         data: () => ({
+            show:false,
             showScheduleForm: false,
-            snackbar: {
-              on:false,
-              msg:''
-            },
             product: {
                 man_info:{}
             },
@@ -131,6 +135,9 @@
             switch_update:false,
             switch_transfer:false
         }),
+        components: {
+            snackbar_alert
+        },
         watch: {
           switch_update: function (val) {
             if (val) {
@@ -188,19 +195,16 @@
                   body: JSON.stringify(update_product)
                 }).then((res) => {
                   if (res.status == 200) {
-                    this.snackbar.on = true;
-                    this.snackbar.msg = 'Продукт обновлен';
+                    bus.$emit('snackbar_alert',{str:'Продукт обновлен',type:'success'});
                     this.switch_update = false;
                   }
-                  if (res.status == 500) {
-                    this.snackbar.on = true;
-                    this.snackbar.msg = res.text();
-                    this.switch_update = false;
+                  else {
+                      bus.$emit('snackbar_alert',{str:'Ошибка',type:'success'});
                   }
                 })
             },
-            init() {
-                fetch('http://localhost:3000/api/products/2').then(res => res.json())
+            init(id) {
+                fetch('http://localhost:3000/api/products/' + id).then(res => res.json())
                     .then(res => {
                         this.product.id = res.id;
                         this.product.man_info = res.man_info;
@@ -210,10 +214,17 @@
                         this.product.ip_addr = res.ip_addr;
                         this.product.storage = res.store_info;
                     })
+                    .then(res => this.show = true)
             }
         },
+        created() {
+            bus.$on('callProductPage', (data) => {
+                this.init(data)
+                // this.show = true;
+            })
+        },
         mounted() {
-          this.init();
+          // this.init();
         }
     }
 </script>

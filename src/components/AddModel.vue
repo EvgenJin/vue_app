@@ -4,10 +4,9 @@
   <snackbar_alert/>
   <v-container>
     <v-form v-model="valid">
-    <v-card>
-      <v-card-title class="justify-center">Модель</v-card-title>
-      <v-card-subtitle>Добавить технику</v-card-subtitle>
+    <v-card shaped>
       <v-row dense class="justify-center">
+        <v-card-subtitle>Добавить модель</v-card-subtitle>
         <v-col sm="10">
           <v-autocomplete
             v-model="product.type_info"
@@ -48,6 +47,7 @@
           </v-col>
       </v-row>
       <v-card-actions class="justify-center">
+        <v-btn color="primary" @click.stop="show=false">Отмена</v-btn>
         <v-btn :disabled="!valid"  color="primary" @click.stop="submit">Добавить</v-btn>
     </v-card-actions>
   </v-card>
